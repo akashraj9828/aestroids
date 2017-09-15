@@ -1,8 +1,10 @@
 var ship;
 var asteroids = [];
 var totalAsteroids;;
+var lasers=[];
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  canvas=createCanvas(windowWidth-50, windowHeight-50);
+  canvas.position(25,25)
   ship = new ship();
   totalAsteroids = floor(random(3, 10));
   for (var i = 0; i < totalAsteroids; i++) {
@@ -19,13 +21,38 @@ function draw() {
   ship.edge();
 
 
+  render_asteroids();
+  render_laser();
 
+
+ 
+  
+
+}
+
+function render_asteroids(){
   for (var i = 0; i < asteroids.length; i++) {
     asteroids[i].render();
     asteroids[i].update();
     asteroids[i].edge();
   }
+}
 
+function render_laser(){
+ 
+  if(lasers.length>15){lasers.splice(0,lasers.length-15)}
+  
+ 
+ 
+  for (var i = 0; i < lasers.length; i++) {
+  
+    lasers[i].render();
+    lasers[i].update();
+    lasers[i].edge();
+  }
+  // t=lasers[1]
+  
+  //  if(t>5){splice(0,1)}
 }
 
 
@@ -36,78 +63,23 @@ function keyReleased() {
 
 /////////////////////keyPressed
 function keyPressed() {
-  if (keyCode == RIGHT_ARROW) {
+  if (keyCode == RIGHT_ARROW || key=="d" ||key=="D") {
     ship.setRotation(.1);
-  } else if (keyCode == LEFT_ARROW) {
+  } else if (keyCode == LEFT_ARROW || key=="a" ||key=="A") {
     ship.setRotation(-.1);
-  } else if (keyCode == UP_ARROW) {
+  } else if (keyCode == UP_ARROW || key=="w" ||key=="W") {
     ship.boost();
-  } else if (keyCode == DOWM_ARROW) {
-    ship.boosting(true);
-  }
+  }else if(key==" " || key==""){
+    lasers.push(new laser(ship.pos,ship.heading))
+  }else if(key=="p" || key=="P"){
+    noLoop();
+  }else if(key=="o" || key=="O"){
+    loop();}
+    // else if (keyCode == DOWM_ARROW || key=="s" ||key=="S") {
+  //   ship.boosting(false);
+  // }
 
 }
 ////////////////////keyPressed
-function ship() {
-  this.pos = createVector(width / 2, height / 2);
-  this.r = 20;
-  this.heading = 0;
-  this.rotation = 0;
-  this.isBoosting = false;
-  this.render = function () {
-    push();
-    translate(this.pos.x, this.pos.y);
-    rotate(this.heading + PI / 2);
-    noFill();
-    stroke(200);
-    triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
-    ellipse(0, -this.r, 4, 4);
-    pop();
-  }
 
 
-  this.vel = createVector(1, 0)
-
-
-  this.update = function () {
-    if (this.isBoosting) {
-      this.boost();
-    }
-    this.pos.add(this.vel)
-    this.vel.mult(.99);
-  }
-
-  this.boost = function () {
-    var force = p5.Vector.fromAngle(this.heading);
-    force.mult(1);
-    this.vel.add(force);
-
-    console.log("booost");
-  }
-
-  this.setRotation = function (a) {
-    this.rotation = a;
-  }
-
-  this.turn = function () {
-    this.heading += this.rotation;
-  }
-
-  this.boosting = function (b) {
-    this.isBoosting = b;
-
-  }
-
-  this.edge = function () {
-    if (this.pos.x > width) {
-      this.pos.x = 0;
-    } else if (this.pos.x < 0) {
-      this.pos.x = width;
-    } else if (this.pos.y > height) {
-      this.pos.y = 0;
-    } else if (this.pos.y < 0) {
-      this.pos.y = height;
-    }
-  }
-
-}
