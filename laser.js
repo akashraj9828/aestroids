@@ -17,7 +17,7 @@ function laser(spos, angle) {
     strokeWeight(5);
     point(this.pos.x, this.pos.y);
     pop();
-    this.f+=1;
+    this.f++;
     
   }
 
@@ -35,9 +35,13 @@ function laser(spos, angle) {
   }
 
   this.hits = function (ast) {
-    d = dist(this.pos.x, this.pos.y, ast.pos.x, ast.pos.y)
-    if (d < ast.r)
-      console.log(hit);
+
+    for(i=0;i<ast.length;i++){
+    d = floor(dist(this.pos.x, this.pos.y, ast[i].pos.x, ast[i].pos.y))
+    if (d < ast[i].r)
+      return true;
+      // console.log("hit:"+i);
+  }
 
     return false;
 

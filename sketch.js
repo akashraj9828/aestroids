@@ -49,10 +49,16 @@ function render_laser(){
     lasers[i].render();
     lasers[i].update();
     lasers[i].edge();
+    
+    time=(lasers[i].f/frameRate());
+    // console.log(time)
+    if(time>1 || lasers[i].hits(asteroids))
+     lasers.splice(i,1)
+   
   }
-  // t=lasers[1]
+ 
   
-  //  if(t>5){splice(0,1)}
+
 }
 
 
