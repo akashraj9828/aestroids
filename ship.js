@@ -4,6 +4,7 @@ function ship() {
     this.heading = 0; 
     this.rotation = 0;
     this.isBoosting = false;
+   this.d=[]
     this.render = function () {
       push();
       translate(this.pos.x, this.pos.y);
@@ -46,6 +47,32 @@ function ship() {
     this.boosting = function (b) {
       this.isBoosting = b;
   
+    }
+
+    this.crash=function(asteroids){
+        dis=[];
+        temp_ast=asteroids;
+        for(i=0;i<temp_ast.length;i++){
+            dis[i]=floor(temp_ast[i].pos.dist(this.pos))
+            if(debugging){
+            stroke(255)
+            line(this.pos.x,this.pos.y,temp_ast[i].pos.x,temp_ast[i].pos.y)
+            stroke(100)
+            text(dis[i],(this.pos.x+temp_ast[i].pos.x)/2+3,(this.pos.y+temp_ast[i].pos.y)/2+3)
+        }
+        // console.log(i+"::"+d)
+            if(dis[i]<(this.r/2+temp_ast[i].r)){
+                if(debugging)
+                console.log("collison with :"+i)
+               push()
+                stroke(255)
+                fill(255)
+                textSize(20)
+                text("GAME OVER",width/2,height/2)
+                pop()
+                noLoop();
+            }
+        }
     }
   
     this.edge = function () {

@@ -2,11 +2,12 @@ var ship;
 var asteroids = [];
 var totalAsteroids;;
 var lasers=[];
+var debugging=false
 function setup() {
   canvas=createCanvas(windowWidth-50, windowHeight-50);
   canvas.position(25,25)
   ship = new ship();
-  totalAsteroids = floor(random(3, 10));
+  totalAsteroids = floor(random(3, 4));
   for (var i = 0; i < totalAsteroids; i++) {
     asteroids.push(new asteroid());
   }
@@ -15,35 +16,58 @@ function setup() {
 
 function draw() {
   background(0);
+  render_ship();
+  render_asteroids();
+  render_laser();
+  ship.crash(asteroids);
+  
+
+
+ 
+  
+
+}
+
+function render_ship(){
   ship.render();
   ship.turn();
   ship.update();
   ship.edge();
-
-
-  render_asteroids();
-  render_laser();
-
-
- 
-  
-
 }
 
 function render_asteroids(){
   for (var i = 0; i < asteroids.length; i++) {
+    // console.log(asteroids.length)
+    if(asteroids[i].hitted){
+      if(debugging)
+        console.log("hitted:"+i+" th ASTEROID")
+      
+      
+      ast=asteroids[i]
+      asteroids.splice(i,1)
+           
+      ast1=new asteroid(ast.pos,ast.r/2)
+      ast2=new asteroid(ast.pos,ast.r/2)
+      
+      asteroids.push(ast1)
+      asteroids.push(ast2)
+      continue;
+    }
+
+    if(asteroids[i].r<10){
+      asteroids.splice(i,1);
+      continue;
+    }
     asteroids[i].render();
     asteroids[i].update();
     asteroids[i].edge();
+    text(i,asteroids[i].pos.x,asteroids[i].pos.y)
+   
   }
 }
 
 function render_laser(){
- 
-  if(lasers.length>15){lasers.splice(0,lasers.length-15)}
   
- 
- 
   for (var i = 0; i < lasers.length; i++) {
   
     lasers[i].render();
@@ -51,7 +75,6 @@ function render_laser(){
     lasers[i].edge();
     
     time=(lasers[i].f/frameRate());
-    // console.log(time)
     if(time>1 || lasers[i].hits(asteroids))
      lasers.splice(i,1)
    
@@ -81,10 +104,6 @@ function keyPressed() {
     noLoop();
   }else if(key=="o" || key=="O"){
     loop();}
-    // else if (keyCode == DOWM_ARROW || key=="s" ||key=="S") {
-  //   ship.boosting(false);
-  // }
-
 }
 ////////////////////keyPressed
 

@@ -26,7 +26,7 @@ function laser(spos, angle) {
     if (this.pos.x > width) {
       this.pos.x = 0;
     } else if (this.pos.x < 0) {
-      this.pos.x = width + this.r;
+      this.pos.x = width;
     } else if (this.pos.y > height ) {
       this.pos.y = 0;
     } else if (this.pos.y < 0) {
@@ -38,9 +38,12 @@ function laser(spos, angle) {
 
     for(i=0;i<ast.length;i++){
     d = floor(dist(this.pos.x, this.pos.y, ast[i].pos.x, ast[i].pos.y))
-    if (d < ast[i].r)
-      return true;
+    if (d < ast[i].r){
+      ast[i].hitted=true;
       // console.log("hit:"+i);
+      return true;
+      
+    }
   }
 
     return false;

@@ -1,6 +1,8 @@
 function asteroid(posn, rad) {
 
 
+  this.pos = createVector()
+
   if (posn) {
     this.pos.x = posn.x;
     this.pos.y = posn.y;
@@ -17,6 +19,7 @@ function asteroid(posn, rad) {
   this.total = floor(random(5, 20));
   this.offset = [];
   this.vel = p5.Vector.random2D();
+  this.hitted=false;
 
 
   for (var i = 0; i < this.total; i++) {
