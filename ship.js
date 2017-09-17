@@ -4,6 +4,7 @@ function ship() {
     this.heading = 0; 
     this.rotation = 0;
     this.isBoosting = false;
+    this.crashed=false;
    this.d=[]
     this.render = function () {
       push();
@@ -64,13 +65,8 @@ function ship() {
             if(dis[i]<(this.r/2+temp_ast[i].r)){
                 if(debugging)
                 console.log("collison with :"+i)
-               push()
-                stroke(255)
-                fill(255)
-                textSize(20)
-                text("GAME OVER",width/2,height/2)
-                pop()
-                noLoop();
+                this.crashed=true;
+              
             }
         }
     }

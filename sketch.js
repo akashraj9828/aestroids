@@ -2,30 +2,31 @@ var ship;
 var asteroids = [];
 var totalAsteroids;;
 var lasers=[];
+var score=0
 var debugging=false
+var pause=false;
+var win=false;
 function setup() {
   canvas=createCanvas(windowWidth-50, windowHeight-50);
   canvas.position(25,25)
   ship = new ship();
   totalAsteroids = floor(random(3, 4));
-  for (var i = 0; i < totalAsteroids; i++) {
-    asteroids.push(new asteroid());
-  }
+ spawn_asteroids();
 
 }
 
+function spawn_asteroids(){
+  for (var i = 0; i < totalAsteroids; i++) {
+    asteroids.push(new asteroid());
+  }
+}
 function draw() {
   background(0);
   render_ship();
   render_asteroids();
   render_laser();
   ship.crash(asteroids);
-  
-
-
- 
-  
-
+  display_score();
 }
 
 function render_ship(){
@@ -51,13 +52,18 @@ function render_asteroids(){
       
       asteroids.push(ast1)
       asteroids.push(ast2)
+
+      score+=floor(ast.r/2)
       continue;
     }
 
     if(asteroids[i].r<10){
       asteroids.splice(i,1);
+      score+=10;
       continue;
     }
+
+    
     asteroids[i].render();
     asteroids[i].update();
     asteroids[i].edge();
@@ -84,6 +90,62 @@ function render_laser(){
 
 }
 
+function display_score(){
+  push()
+  textSize(30)
+  fill(90,170,30)
+  text(score,width-100,30)
+  pop()
+
+  if(asteroids.length==0)
+    {
+      win=true;
+      push()
+      textSize(70)
+      textAlign(CENTER)
+      fill(255)
+      stroke(255)
+      text("YOU WIN !!!! \n congratulations\n\n Press x to play again",width/2,height/2)
+      pop()
+    }
+
+    if(ship.crashed)
+      {
+        push()
+        stroke(255)
+        fill(255)
+        textSize(20)
+        textAlign(CENTER)
+        text("GAME OVER",width/2,height/2)
+        pop()
+        noLoop();
+      }
+
+      if(pause){
+        console.log("paused")
+        push()
+        textSize(40)
+        textAlign(CENTER)
+        fill(255)
+        stroke(255)
+        text("|| PAUSED" , 110,110)
+        pop()
+        noLoop();
+
+      }
+}
+
+function play_pause(){
+  if(pause){
+    pause=false;
+    loop()
+  }else if(!pause){
+    pause=true;
+    noLoop();
+  }
+
+}
+
 
 function keyReleased() {
   ship.setRotation(0);
@@ -101,9 +163,11 @@ function keyPressed() {
   }else if(key==" " || key==""){
     lasers.push(new laser(ship.pos,ship.heading))
   }else if(key=="p" || key=="P"){
-    noLoop();
-  }else if(key=="o" || key=="O"){
-    loop();}
+    play_pause()
+  }else if(win && (key=="x" || key=="X") ){
+    win=false;
+    spawn_asteroids();
+  }
 }
 ////////////////////keyPressed
 
