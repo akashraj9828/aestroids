@@ -16,6 +16,19 @@ function ship() {
       ellipse(0, -this.r, 4, 4);
       pop();
     }
+    this.animate=function(){
+        // push();
+        // translate(this.pos.x, this.pos.y);
+        // rotate(this.heading + PI / 2);
+        // fisll(255);
+        // stroke(200);
+        // strokeWeight(20)
+        // // triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
+        // // ellipse(0, -this.r, 4, 4);
+        // point(this.r,this.r+100)
+        // pop();
+        // console.log("cccccccc")
+    }
   
   
     this.vel = createVector(1, 0)

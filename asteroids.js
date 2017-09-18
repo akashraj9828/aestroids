@@ -2,12 +2,15 @@ function asteroid(posn, rad) {
 
 
   this.pos = createVector()
-
+  this.setPos=function(){
+    this.pos = createVector(random(width), random(height));
+  }
+  
   if (posn) {
     this.pos.x = posn.x;
     this.pos.y = posn.y;
   } else {
-    this.pos = createVector(random(width), random(height));
+    this.setPos();
   }
   if (rad) {
     this.r = rad
@@ -16,10 +19,12 @@ function asteroid(posn, rad) {
     this.r = random(20, 80);
   }
 
+  
   this.total = floor(random(5, 20));
   this.offset = [];
   this.vel = p5.Vector.random2D();
   this.hitted=false;
+  this.clash=true;
 
 
   for (var i = 0; i < this.total; i++) {

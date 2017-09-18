@@ -10,7 +10,7 @@ function setup() {
   canvas=createCanvas(windowWidth-50, windowHeight-50);
   canvas.position(25,25)
   ship = new ship();
-  totalAsteroids = floor(random(3, 4));
+  totalAsteroids = floor(random(7, 25));
  spawn_asteroids();
 
 }
@@ -18,7 +18,19 @@ function setup() {
 function spawn_asteroids(){
   for (var i = 0; i < totalAsteroids; i++) {
     asteroids.push(new asteroid());
+    dis=floor(asteroids[i].pos.dist(ship.pos))
+   
+    while(asteroids[i].clash){
+    if(dis<(asteroids[i].r*4) && asteroids[i].clash){
+       asteroids[i].setPos()  
+       dis=floor(asteroids[i].pos.dist(ship.pos))
+      //  console.log(asteroids[i].clash)
+    }else{
+      asteroids[i].clash=false
+      // console.log(asteroids[i].clash)
+    }
   }
+}
 }
 function draw() {
   background(0);
@@ -105,7 +117,7 @@ function display_score(){
       textAlign(CENTER)
       fill(255)
       stroke(255)
-      text("YOU WIN !!!! \n congratulations\n\n Press x to play again",width/2,height/2)
+      text("YOU WIN !!!! \n congratulations\n\n Press x to continue playing",width/2,height/2)
       pop()
     }
 
@@ -158,13 +170,18 @@ function keyPressed() {
     ship.setRotation(.1);
   } else if (keyCode == LEFT_ARROW || key=="a" ||key=="A") {
     ship.setRotation(-.1);
-  } else if (keyCode == UP_ARROW || key=="w" ||key=="W") {
+  } 
+   if (keyCode == UP_ARROW || key=="w" ||key=="W") {
     ship.boost();
-  }else if(key==" " || key==""){
+    ship.animate()
+  }
+   if(key==" " || key==""){
     lasers.push(new laser(ship.pos,ship.heading))
-  }else if(key=="p" || key=="P"){
+  }
+   if(key=="p" || key=="P"){
     play_pause()
-  }else if(win && (key=="x" || key=="X") ){
+  }
+  if(win && (key=="x" || key=="X") ){
     win=false;
     spawn_asteroids();
   }
