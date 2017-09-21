@@ -6,9 +6,41 @@ var score=0
 var debugging=false
 var pause=false;
 var win=false;
+var dead=false;
+var fire_sound;
+var thrust_sound;
+var bangLarge_sound;
+var bangMedium_sound;
+var bangSmall_sound;
+var boom_sound;
+var beat1_sound;
+var beat2_sound;
+
+// function preLoad(){
+//   fire_sound = loadSound("sounds/fire.mp3")
+// 	thrust_sound = loadSound("sounds/thrust.mp3")
+// 	bangLarge_sound = loadSound("sounds/bangLarge.mp3")
+// 	bangMedium_sound = loadSound("sounds/bangMedium.mp3")
+// 	bangSmall_sound = loadSound("sounds/bangSmall.mp3")
+// 	beat1_sound = loadSound("sounds/beat1.mp3")
+// 	beat2_sound = loadSound("sounds/beat2.mp3")
+// }
 function setup() {
   canvas=createCanvas(windowWidth-50, windowHeight-50);
   canvas.position(25,25)
+
+
+    fire_sound = loadSound("sounds/fire.mp3")
+	thrust_sound = loadSound("sounds/thrust.mp3")
+	bangLarge_sound = loadSound("sounds/bangLarge.wav")
+	bangMedium_sound = loadSound("sounds/bangMedium.wav")
+  bangSmall_sound = loadSound("sounds/bangSmall.wav")
+  boom_sound=loadSound("sounds/boom.mp3")
+	beat1_sound = loadSound("sounds/beat1.mp3")
+	beat2_sound = loadSound("sounds/beat2.mp3")
+
+
+
   ship = new ship();
   totalAsteroids = floor(random(7, 25));
  spawn_asteroids();
@@ -57,8 +89,18 @@ function render_asteroids(){
       
       
       ast=asteroids[i]
+      if(ast.r<20){
+        bangSmall_sound.play()
+        console.log("small")
+      }else if(ast.r<40){
+        bangMedium_sound.play()
+        console.log("medium")
+      }else if(ast.r>40){
+        bangLarge_sound.play()
+        console.log("large")
+      }
       asteroids.splice(i,1)
-           
+      // boom_sound.play()
       ast1=new asteroid(ast.pos,ast.r/2)
       ast2=new asteroid(ast.pos,ast.r/2)
       
@@ -168,15 +210,19 @@ function keyReleased() {
 function keyPressed() {
   if (keyCode == RIGHT_ARROW || key=="d" ||key=="D") {
     ship.setRotation(.1);
+    beat1_sound.play()
   } else if (keyCode == LEFT_ARROW || key=="a" ||key=="A") {
     ship.setRotation(-.1);
+    beat2_sound.play()
   } 
    if (keyCode == UP_ARROW || key=="w" ||key=="W") {
     ship.boost();
     ship.animate()
+    thrust_sound.play()
   }
    if(key==" " || key==""){
     lasers.push(new laser(ship.pos,ship.heading))
+    fire_sound.play();
   }
    if(key=="p" || key=="P"){
     play_pause()

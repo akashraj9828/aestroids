@@ -28,7 +28,7 @@ function asteroid(posn, rad) {
 
 
   for (var i = 0; i < this.total; i++) {
-    this.offset[i] = random(-15, 15)
+    this.offset[i] = random(this.r)
   }
   push();
   this.render = function () {
