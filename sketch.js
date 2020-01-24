@@ -347,25 +347,25 @@ function keyPressed() {
   if ((keyCode == RIGHT_ARROW || key == "d" || key == "D") && keyIsPressed) {
     ship.setRotation(rotaion_speed);
     beat1_sound.play()
-    console.log("right");
+    // console.log("right");
 
   }
   if ((keyCode == LEFT_ARROW || key == "a" || key == "A") && keyIsPressed) {
     ship.setRotation(-rotaion_speed);
     beat2_sound.play()
-    console.log("left");
+    // console.log("left");
   }
   if ((keyCode == UP_ARROW || key == "w" || key == "W") && keyIsPressed) {
     ship.boost();
     ship.animate()
     thrust_sound.play()
-    console.log("up");
+    // console.log("up");
   }
   if ((keyCode == DOWN_ARROW || key == "s" || key == "S") && keyIsPressed) {
     ship.boost(-1);
     ship.animate()
     thrust_sound.play()
-    console.log("up");
+    // console.log("down");
   }
   if ((key == " " || key == "") && keyIsPressed) {
     // lasers.length
@@ -377,14 +377,14 @@ function keyPressed() {
     } else {
       ttl = laser_delay + 1;
     }
-    console.log(ttl);
+    // console.log(ttl);
 
     if (lasers.length < max_laser_limit && ttl > laser_delay) {
       let pos = ship.pos.copy()
       pos.add(createVector(0, 0))
       lasers.push(new laser(pos, ship.heading))
       fire_sound.play(amp = .1);
-      console.log("shot");
+      // console.log("shot");
 
     }
     // console.log("space");

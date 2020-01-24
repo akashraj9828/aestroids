@@ -12,7 +12,7 @@ function ship_o() {
     rotate(this.heading + PI / 2);
     // noFill();
     stroke(200);
-    fill(0,250,0,100)
+    fill(0, 250, 0, 100)
     triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
     ellipse(0, -this.r, 4, 4);
     pop();
@@ -44,19 +44,19 @@ function ship_o() {
     this.pos.add(this.vel)
     this.vel.mult(velocity_damp_factor);
 
-    this.vel.x=parseFloat(this.vel.x.toFixed(decimal_limit))
-    this.vel.y=parseFloat(this.vel.y.toFixed(decimal_limit))
+    this.vel.x = parseFloat(this.vel.x.toFixed(decimal_limit))
+    this.vel.y = parseFloat(this.vel.y.toFixed(decimal_limit))
 
-    if(this.vel.x<0.1 && this.vel.x>-0.1)
-    this.vel.x=0
+    if (this.vel.x < 0.1 && this.vel.x > -0.1)
+      this.vel.x = 0
 
-    if(this.vel.y<0.1 && this.vel.y>-0.1)
-    this.vel.y=0
+    if (this.vel.y < 0.1 && this.vel.y > -0.1)
+      this.vel.y = 0
   }
 
-  this.boost = function (direction=1) {
+  this.boost = function (direction = 1) {
     var force = p5.Vector.fromAngle(this.heading);
-    force.mult(froce_multiplier*direction);
+    force.mult(froce_multiplier * direction);
     this.vel.add(force);
     // console.log("booost");
   }
