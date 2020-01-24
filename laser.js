@@ -1,10 +1,10 @@
 function laser(spos, angle) {
-  this.lspeed = 5;
+  // laser_speed = 5;
   this.f=0
   this.pos = createVector(spos.x, spos.y);
   this.heading = p5.Vector.fromAngle(angle);
-  this.vel = createVector(this.heading.x * this.lspeed, this.heading.y * this.lspeed);
-
+  this.vel = createVector(this.heading.x * laser_speed, this.heading.y * laser_speed);
+  this.init_frame=frameCount
 
   this.update = function () {
     this.pos.add(this.vel);
@@ -13,8 +13,10 @@ function laser(spos, angle) {
 
   this.render = function () {
     push();
-    stroke(200);
-    strokeWeight(5);
+    // stroke(200);
+    // strokeWeight(5);
+    stroke(155,0,0);
+    strokeWeight(8);
     point(this.pos.x, this.pos.y);
     pop();
     this.f++;

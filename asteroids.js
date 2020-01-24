@@ -2,6 +2,7 @@ function asteroid(posn, rad) {
 
 
   this.pos = createVector()
+  this.col=color(random(50,200))
   this.setPos=function(){
     this.pos = createVector(random(width), random(height));
   }
@@ -33,12 +34,11 @@ function asteroid(posn, rad) {
   push();
   this.render = function () {
 
-
-
     beginShape();
     push();
-    stroke(3000);
-    noFill();
+    // stroke(3000);
+    // noFill();
+    fill(this.col)
     translate(this.pos.x, this.pos.y)
     for (var i = 0; i < this.total; i++) {
       var angle = map(i, 0, this.total, 0, 2 * PI)
